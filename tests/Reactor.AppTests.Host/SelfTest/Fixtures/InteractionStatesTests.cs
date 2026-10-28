@@ -116,4 +116,44 @@ internal static class InteractionStatesTests
             H.Check("InterState_Mount_HandlersRegistered", true);
         }
     }
+
+    // Hover-out used to animate the handoff visual's Offset to zero. Offset is the layout
+    // position, so an element below a sibling jumped to its parent's origin and stayed there.
+    internal class HoverOutKeepsLayoutOffset(Harness h) : SelfTestFixtureBase(h)
+    {
+        public override async Task RunAsync()
+        {
+            var host = H.CreateHost();
+            host.Mount(ctx =>
+            {
+                return VStack(
+                    Border(TextBlock("Above")).Height(40),
+                    Border(TextBlock("Hover me"))
+                        .InteractionStates(states => states.Pressed(scale: 0.97f))
+                        .AutomationId("interact-below")
+                );
+            });
+
+            await Harness.Render();
+
+            var target = H.FindControl<Border>(b =>
+                Microsoft.UI.Xaml.Automation.AutomationProperties.GetAutomationId(b) == "interact-below");
+            H.Check("InterState_HoverOut_TargetMounted", target is not null);
+            if (target is null) return;
+
+            var visual = ElementCompositionPreview.GetElementVisual(target);
+
+            Reconciler.SimulatePointerOverForTests(target, isOver: true);
+            Reconciler.SimulatePointerOverForTests(target, isOver: false);
+            await Task.Delay(400);
+            await Harness.Render();
+
+            H.Check("InterState_HoverOut_UsesTranslationChannel",
+                visual.Properties.TryGetVector3("Translation", out var translation) == Microsoft.UI.Composition.CompositionGetValueStatus.Succeeded,
+                "hover-out should animate Translation, leaving Offset to layout");
+            H.Check("InterState_HoverOut_TranslationRestsAtZero", translation == Vector3.Zero, $"translation={translation}");
+            // the 40px sibling above means layout puts the target at Y >= 40
+            H.Check("InterState_HoverOut_OffsetKeptLayoutPosition", visual.Offset.Y >= 40, $"offset={visual.Offset}");
+        }
+    }
 }

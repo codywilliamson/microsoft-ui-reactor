@@ -768,6 +768,7 @@ internal static class SelfTestFixtureRegistry
         "InterState_ConfigImmutability",
         "InterState_NoLayoutProperties",
         "InterState_MountIntegration",
+        "InterState_HoverOutKeepsLayoutOffset",
         // Animation system — Transitions
         "Transition_TypeHierarchy",
         "Transition_Asymmetric",
@@ -2896,6 +2897,7 @@ internal static class SelfTestFixtureRegistry
         "InterState_ConfigImmutability" => new InteractionStatesTests.ConfigImmutability(harness),
         "InterState_NoLayoutProperties" => new InteractionStatesTests.NoLayoutProperties(harness),
         "InterState_MountIntegration" => new InteractionStatesTests.MountIntegration(harness),
+        "InterState_HoverOutKeepsLayoutOffset" => new InteractionStatesTests.HoverOutKeepsLayoutOffset(harness),
         // Animation system — Transitions
         "Transition_TypeHierarchy" => new TransitionTests.TypeHierarchy(harness),
         "Transition_Asymmetric" => new TransitionTests.AsymmetricTransition(harness),

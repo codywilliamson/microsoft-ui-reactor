@@ -374,6 +374,12 @@ Conventions for contributors:
 
 ### Fixed
 
+- **`.InteractionStates()` no longer moves an element to its parent's origin on hover-out**
+  (issue #1432). Returning to the normal state animated the handoff visual's `Offset` to
+  zero, and on a XAML element that `Offset` is its layout position, so the element jumped
+  to the top-left of its parent and stayed there. The state machine now animates
+  `Translation` instead.
+
 - **A conditional child no longer shifts its unkeyed siblings** (issue #1423). The
   container factories drop `null` / `Empty()` arguments and flatten `Group(...)`, so
   toggling `cond ? X : Empty()` moved every later sibling down one index and the
