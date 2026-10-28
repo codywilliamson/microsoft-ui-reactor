@@ -386,11 +386,11 @@ Conventions for contributors:
   release transaction-owned interfaces deterministically. See the
   [Jump list guide](docs/guide/windows.md#jump-list) (spec 036 §11.3).
 
-- **`.InteractionStates()` no longer moves an element to its parent's origin on hover-out**
-  (issue #1432). Returning to the normal state animated the handoff visual's `Offset` to
-  zero, and on a XAML element that `Offset` is its layout position, so the element jumped
-  to the top-left of its parent and stayed there. The state machine now animates
-  `Translation` instead.
+- **`.InteractionStates()` and `.Keyframes()` translations no longer move an element to its
+  parent's origin** (issue #1432). Both animated the handoff visual's `Offset`, and on a
+  XAML element that `Offset` is its layout position, so a `translation:` replaced the
+  element's position instead of nudging it, and hover-out sent it to the top-left of its
+  parent. Both now animate `Translation`.
 
 - **A conditional child no longer shifts its unkeyed siblings** (issue #1423). The
   container factories drop `null` / `Empty()` arguments and flatten `Group(...)`, so

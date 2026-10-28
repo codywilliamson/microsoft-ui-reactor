@@ -5226,7 +5226,9 @@ public sealed partial class Reconciler : IDisposable
             {
                 var anim = compositor.CreateVector3KeyFrameAnimation();
                 anim.Duration = def.Duration;
-                anim.Target = "Offset";
+                // Translation, not Offset: Offset is the layout position on a XAML handoff visual (#1432)
+                ElementCompositionPreview.SetIsTranslationEnabled(uie, true);
+                anim.Target = "Translation";
                 if (def.Loop) anim.IterationBehavior = AnimationIterationBehavior.Forever;
                 foreach (var kf in def.Keyframes)
                 {
@@ -5283,7 +5285,7 @@ public sealed partial class Reconciler : IDisposable
             var visual = Microsoft.UI.Xaml.Hosting.ElementCompositionPreview.GetElementVisual(uie);
             visual.StopAnimation("Opacity");
             visual.StopAnimation("Scale");
-            visual.StopAnimation("Offset");
+            visual.StopAnimation("Translation");
             visual.StopAnimation("RotationAngle");
         }
         catch { /* No compositor (e.g. unit tests) */ }

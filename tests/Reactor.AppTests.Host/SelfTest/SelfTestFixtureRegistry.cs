@@ -801,6 +801,7 @@ internal static class SelfTestFixtureRegistry
         "AnimCombo_FadeEnter",
         "AnimCombo_InteractionSetup",
         "AnimCombo_KeyframesOnMount",
+        "AnimCombo_KeyframesTranslationChannel",
         "AnimCombo_StaggerOnContainer",
         // Animation combination tests — pairs
         "AnimCombo_AnimatePlusLayout",
@@ -2933,6 +2934,7 @@ internal static class SelfTestFixtureRegistry
         "AnimCombo_FadeEnter" => new AnimationCombinationTests.TransitionFadeEnter(harness),
         "AnimCombo_InteractionSetup" => new AnimationCombinationTests.InteractionStatesSetup(harness),
         "AnimCombo_KeyframesOnMount" => new AnimationCombinationTests.KeyframesOnMount(harness),
+        "AnimCombo_KeyframesTranslationChannel" => new AnimationCombinationTests.KeyframesTranslationChannel(harness),
         "AnimCombo_StaggerOnContainer" => new AnimationCombinationTests.StaggerOnContainer(harness),
         // Animation combination tests — pairs
         "AnimCombo_AnimatePlusLayout" => new AnimationCombinationTests.AnimatePlusLayout(harness),
